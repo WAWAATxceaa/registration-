@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบรับสมัครเรียนออนไลน์ (โควตา) ประจำปีการศึกษา 2570 | วิทยาลัยเทคนิคท่าหลวงซิเมนต์ไทยอนุสรณ์</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- ส่วนหัวเว็บแบบทางการของหน่วยงานการศึกษา -->
+  <header class="official-header">
+    <div class="header-container">
+      <img src="assets/logo.png" alt="ตราสัญลักษณ์ วิทยาลัยเทคนิคท่าหลวงซิเมนต์ไทยอนุสรณ์" class="college-logo">
+      <div class="header-text">
+        <h1 class="college-title">วิทยาลัยเทคนิคท่าหลวงซิเมนต์ไทยอนุสรณ์</h1>
+        <div class="sub-organization">สังกัดสำนักงานคณะกรรมการการอาชีวศึกษา กระทรวงศึกษาธิการ</div>
+        <div class="system-tagline">ระบบรับสมัครนักเรียน นักศึกษา เข้าศึกษาต่อประเภทโควตา ประจำปีการศึกษา 2570</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- แถบเมนูนำทางหลัก 4 รายการตามข้อกำหนด -->
+  <nav class="main-navigation">
+    <div class="nav-container">
+      <ul class="nav-links">
+        <li class="nav-item">
+          <a class="nav-link active" data-target="section-home">หน้าแรก</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-target="section-apply">สมัครเรียน</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-target="section-status">ตรวจสอบสถานะ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-target="section-staff">เจ้าหน้าที่</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- เนื้อหาหลัก -->
+  <main class="site-content">
+
+    <!-- 1. หน้าแรก (Home Page) -->
+    <section id="section-home" class="page-section active">
+      
+      <!-- กล่องประกาศทางการ -->
+      <div class="official-notice-box">
+        <h3 id="home-announcement-title">ประกาศรับสมัครคัดเลือกเข้าศึกษาต่อ (ประเภทโควตา) ประจำปีการศึกษา 2570</h3>
+        <p id="home-announcement-body">วิทยาลัยเทคนิคท่าหลวงซิเมนต์ไทยอนุสรณ์ มีความประสงค์เปิดรับสมัครคัดเลือกนักเรียน นักศึกษา เข้าศึกษาต่อระดับประกาศนียบัตรวิชาชีพ (ปวช.) และระดับประกาศนียบัตรวิชาชีพชั้นสูง (ปวส.) ประเภทโควตา ประจำปีการศึกษา 2570 เพื่อส่งเสริมโอกาสทางการศึกษาด้านวิชาชีพแก่ผู้ที่มีผลการเรียนดีหรือมีความสามารถพิเศษ</p>
+      </div>
+
+      <!-- กำหนดการรับสมัครและปฏิทินปฏิบัติงาน -->
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">กำหนดการและปฏิทินปฏิบัติงานรับสมัครโควตา ประจำปีการศึกษา 2570</h2>
+          <span class="panel-subtitle">งานทะเบียนและประมวลผล วิทยาลัยเทคนิคท่าหลวงซิเมนต์ไทยอนุสรณ์</span>
+        </div>
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th style="width: 28%;">วัน เดือน ปี</th>
+              <th>กิจกรรม / กำหนดการ</th>
+              <th style="width: 25%;">สถานที่ / ช่องทาง</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1 พฤศจิกายน 2569 – 15 มกราคม 2570</strong></td>
+              <td>เปิดรับสมัครนักเรียน นักศึกษา ประเภทโควตา ออนไลน์</td>
+              <td>ผ่านระบบออนไลน์วิทยาลัยฯ ตลอด 24 ชั่วโมง</td>
+            </tr>
+            <tr>
+              <td><strong>20 มกราคม 2570</strong></td>
+              <td>ประกาศรายชื่อผู้มีสิทธิ์เข้ารับการคัดเลือกและสัมภาษณ์</td>
+              <td>ทางเว็บไซต์วิทยาลัยฯ และระบบตรวจสอบสถานะ</td>
+            </tr>
+            <tr>
+              <td><strong>25 มกราคม 2570</strong></td>
+              <td>การสอบสัมภาษณ์และประเมินเอกสารหลักฐาน</td>
+              <td>ณ วิทยาลัยเทคนิคท่าหลวงซิเมนต์ไทยอนุสรณ์</td>
+            </tr>
+            <tr>
+              <td><strong>30 มกราคม 2570</strong></td>
+              <td>ประกาศผลการคัดเลือกผู้ผ่านการรับสมัครประเภทโควตา</td>
+              <td>บอร์ดประชาสัมพันธ์และระบบตรวจสอบสถานะ</td>
+            </tr>
+            <tr>
+              <td><strong>5 – 6 กุมภาพันธ์ 2570</strong></td>
+              <td>รายงานตัว ชำระค่าธรรมเนียมการศึกษา และมอบตัวเป็นนักเรียน นักศึกษา</td>
+              <td>หอประชุมวิทยาลัยเทคนิคท่าหลวงซิเมนต์ไทยอนุสรณ์</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ระดับและสาขาวิชาที่เปิดรับสมัคร -->
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">ระดับและสาขาวิชาที่เปิดรับสมัครคัดเลือก</h2>
+          <span class="panel-subtitle">หลักสูตรประกาศนียบัตรวิชาชีพ (ปวช.) และประกาศนียบัตรวิชาชีพชั้นสูง (ปวส.)</span>
+        </div>
+        <div class="program-grid">
+          
+          <div class="program-box">
+            <h4>ระดับประกาศนียบัตรวิชาชีพ (ปวช.)</h4>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">รับผู้สำเร็จการศึกษาชั้น ม.3 หรือเทียบเท่า</p>
+            <ul id="home-pvc-list">
+              <li>เทคโนโลยีสารสนเทศ</li>
+              <li>การบัญชี</li>
+              <li>เทคโนโลยีธุรกิจดิจิทัล</li>
+              <li>การตลาด</li>
+              <li>ไฟฟ้ากำลัง</li>
+              <li>อิเล็กทรอนิกส์</li>
+              <li>เทคนิคคอมพิวเตอร์</li>
+              <li>เทคนิคการผลิต</li>
+              <li>ซ่อมบำรุงอุตสาหกรรม</li>
+              <li>ยานยนต์</li>
+              <li>เมคคาทรอนิกส์</li>
+            </ul>
+          </div>
+
+          <div class="program-box">
+            <h4>ระดับประกาศนียบัตรวิชาชีพชั้นสูง (ปวส.)</h4>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">รับผู้สำเร็จการศึกษา ปวช. หรือ ม.6 หรือเทียบเท่า</p>
+            <ul id="home-pvs-list">
+              <li>เทคโนโลยีสารสนเทศ</li>
+              <li>การบัญชี</li>
+              <li>เทคโนโลยีธุรกิจดิจิทัล</li>
+              <li>การตลาด</li>
+              <li>ไฟฟ้ากำลัง</li>
+              <li>อิเล็กทรอนิกส์</li>
+              <li>เทคโนโลยีคอมพิวเตอร์</li>
+              <li>เทคนิคการผลิต</li>
+              <li>ซ่อมบำรุงอุตสาหกรรม</li>
+              <li>ยานยนต์</li>
+              <li>เมคคาทรอนิกส์</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- เอกสารหลักฐานที่ต้องเตรียม -->
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">เอกสารและหลักฐานประกอบการสมัคร</h2>
+          <span class="panel-subtitle">โปรดเตรียมไฟล์ดิจิทัล (JPG, PNG หรือ PDF ขนาดไม่เกิน 5 MB) ก่อนดำเนินการกรอกฟอร์ม</span>
+        </div>
+        <ul style="padding-left: 20px; line-height: 2; font-size: 14px; color: var(--text-secondary);">
+          <li><strong>1. รูปถ่ายขนาด 1 นิ้ว:</strong> หน้าตรง ไม่สวมหมวก ไม่สวมแว่นตาดำ ถ่ายไว้ไม่เกิน 6 เดือน (บังคับ)</li>
+          <li><strong>2. เอกสารแสดงผลการเรียนเฉลี่ยสะสม (ปพ.1):</strong> ระเบียนแสดงผลการเรียน 5 ภาคเรียน หรือหนังสือรับรองผลการเรียน (บังคับ)</li>
+          <li><strong>3. สำเนาบัตรประจำตัวประชาชน หรือสำเนาทะเบียนบ้าน:</strong> ของผู้สมัคร รับรองสำเนาถูกต้อง (บังคับ)</li>
+          <li><strong>4. สำเนาเกียรติบัตร / ใบประกาศนียบัตร:</strong> เอกสารรับรองผลงานหรือความสามารถพิเศษ (ถ้ามี)</li>
+        </ul>
+        <div style="margin-top: 20px; text-align: right;">
+          <a class="btn btn-primary" onclick="document.querySelector('[data-target=\'section-apply\']').click();">เข้าสู่หน้ากรอกใบสมัครออนไลน์</a>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 2. หน้าสมัครเรียน (Application Form Section) -->
+    <section id="section-apply" class="page-section">
+      
+      <!-- ข้อความแจ้งเตือนกรณีปิดรับสมัคร -->
+      <div id="apply-closed-notice" class="official-notice-box" style="display: none; border-left-color: var(--danger-color);">
+        <h3 style="color: var(--danger-color);">ระบบปิดรับสมัคร</h3>
+        <p>ขณะนี้อยู่นอกระยะเวลาการรับสมัครนักเรียน นักศึกษา ประเภทโควตา ประจำปีการศึกษา 2570</p>
+      </div>
+
+      <div id="apply-form-container">
+        <div class="panel-header" style="margin-bottom: 16px;">
+          <div>
+            <h2 class="panel-title">แบบคำขอสมัครคัดเลือกเข้าศึกษาต่อ (ประเภทโควตา)</h2>
+            <span class="panel-subtitle">ประจำปีการศึกษา 2570 วิทยาลัยเทคนิคท่าหลวงซิเมนต์ไทยอนุสรณ์</span>
+          </div>
+        </div>
+
+        <div id="form-error-alert" class="official-notice-box" style="display: none; border-left-color: var(--danger-color); color: var(--danger-color); font-weight: 600; margin-bottom: 20px;"></div>
+
+        <form id="student-application-form">
+
+          <!-- ระดับการศึกษาที่ต้องการสมัคร -->
+          <div class="form-section-block">
+            <div class="form-section-title">ระดับการศึกษาที่ประสงค์สมัครคัดเลือก (เลือก 1 ระดับ)</div>
+            <div class="radio-group">
+              <label class="radio-item">
+                <input type="radio" name="apply_level" value="ปวช." checked>
+                <span>ปวช. (ประกาศนียบัตรวิชาชีพ)</span>
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="apply_level" value="ปวส. (สายตรง)">
+                <span>ปวส. (สายตรง - จบ ปวช. สาขาตรง)</span>
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="apply_level" value="ปวส. (ม.6/ปวช. ต่างสาขา)">
+                <span>ปวส. (ม.6 หรือ ปวช. ต่างสาขาวิชา)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- ข้อที่ 1 ข้อมูลผู้สมัคร -->
+          <div class="form-section-block">
+            <div class="form-section-title">ข้อ 1 ข้อมูลผู้สมัคร</div>
+            
+            <div class="form-group-row">
+              <div class="form-col-3 form-field">
+                <label class="form-label" for="applicant-title">คำนำหน้า<span class="required-mark">*</span></label>
+                <select id="applicant-title" class="form-select" required>
+                  <option value="">-- เลือก --</option>
+                  <option value="นาย">นาย</option>
+                  <option value="นางสาว">นางสาว</option>
+                  <option value="เด็กชาย">เด็กชาย</option>
+                  <option value="เด็กหญิง">เด็กหญิง</option>
+                </select>
+              </div>
+
+              <div class="form-col-5 form-field">
+                <label class="form-label" for="applicant-fullname">ชื่อ - นามสกุล<span class="required-mark">*</span></label>
+                <input type="text" id="applicant-fullname" class="form-input" placeholder="ไม่ต้องใส่คำนำหน้า" required>
+              </div>
+
+              <div class="form-col-4 form-field">
+                <label class="form-label" for="applicant-national-id">เลขประจำตัวประชาชน 13 หลัก<span class="required-mark">*</span></label>
+                <input type="text" id="applicant-national-id" class="form-input" maxlength="13" placeholder="ตัวเลข 13 หลักเท่านั้น" required>
+              </div>
+            </div>
+
+            <div class="form-group-row">
+              <div class="form-col-12">
+                <label class="form-label">วัน/เดือน/ปีเกิด (พ.ศ.)<span class="required-mark">*</span></label>
+              </div>
+              <div class="form-col-3 form-field">
+                <select id="applicant-birthday" class="form-select" required>
+                  <option value="">-- วันที่ --</option>
+                  <script>
+                    for(let i=1; i<=31; i++) {
+                      document.write(`<option value="${i}">${i}</option>`);
+                    }
+                  </script>
+                </select>
+              </div>
+              <div class="form-col-5 form-field">
+                <select id="applicant-birthmonth" class="form-select" required>
+                  <option value="">-- เดือน --</option>
+                  <option value="มกราคม">มกราคม</option>
+                  <option value="กุมภาพันธ์">กุมภาพันธ์</option>
+                  <option value="มีนาคม">มีนาคม</option>
+                  <option value="เมษายน">เมษายน</option>
+                  <option value="พฤษภาคม">พฤษภาคม</option>
+                  <option value="มิถุนายน">มิถุนายน</option>
+                  <option value="กรกฎาคม">กรกฎาคม</option>
+                  <option value="สิงหาคม">สิงหาคม</option>
+                  <option value="กันยายน">กันยายน</option>
+                  <option value="ตุลาคม">ตุลาคม</option>
+                  <option value="พฤศจิกายน">พฤศจิกายน</option>
+                  <option value="ธันวาคม">ธันวาคม</option>
+                </select>
+              </div>
+              <div class="form-col-4 form-field">
+                <input type="number" id="applicant-birthyear" class="form-input" placeholder="ปี พ.ศ. เช่น 2554" min="2540" max="2560" required>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ข้อที่ 2 ข้อมูลบิดา -->
+          <div class="form-section-block">
+            <div class="form-section-title">ข้อ 2 ข้อมูลบิดา</div>
+            <div class="form-group-row">
+              <div class="form-col-6 form-field">
+                <label class="form-label" for="father-name">ชื่อ - นามสกุล บิดา<span class="required-mark">*</span></label>
+                <input type="text" id="father-name" class="form-input" placeholder="นาย..." required>
+              </div>
+              <div class="form-col-2 form-field">
+                <label class="form-label" for="father-age">อายุ (ปี)<span class="required-mark">*</span></label>
+                <input type="number" id="father-age" class="form-input" min="20" max="100" required>
+              </div>
+              <div class="form-col-4 form-field">
+                <label class="form-label" for="father-job">อาชีพ<span class="required-mark">*</span></label>
+                <input type="text" id="father-job" class="form-input" placeholder="เช่น เกษตรกร, ค้าขาย, รับจ้าง" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- ข้อที่ 3 ข้อมูลมารดา -->
+          <div class="form-section-block">
+            <div class="form-section-title">ข้อ 3 ข้อมูลมารดา</div>
+            <div class="form-group-row">
+              <div class="form-col-6 form-field">
+                <label class="form-label" for="mother-name">ชื่อ - นามสกุล มารดา<span class="required-mark">*</span></label>
+                <input type="text" id="mother-name" class="form-input" placeholder="นาง/นางสาว..." required>
+              </div>
+              <div class="form-col-2 form-field">
+                <label class="form-label" for="mother-age">อายุ (ปี)<span class="required-mark">*</span></label>
+                <input type="number" id="mother-age" class="form-input" min="20" max="100" required>
+              </div>
+              <div class="form-col-4 form-field">
+                <label class="form-label" for="mother-job">อาชีพ<span class="required-mark">*</span></label>
+                <input type="text" id="mother-job" class="form-input" placeholder="เช่น แม่บ้าน, รับจ้าง, ธุรกิจส่วนตัว" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- ข้อที่ 4 ที่อยู่ปัจจุบันที่ติดต่อได้ -->
+          <div class="form-section-block">
+            <div class="form-section-title">ข้อ 4 ที่อยู่ปัจจุบันที่สามารถติดต่อได้สะดวก</div>
+            
+            <div class="form-group-row">
+              <div class="form-col-3 form-field">
+                <label class="form-label" for="applicant-houseno">บ้านเลขที่<span class="required-mark">*</span></label>
+                <input type="text" id="applicant-houseno" class="form-input" required>
+              </div>
+              <div class="form-col-3 form-field">
+                <label class="form-label" for="applicant-moo">หมู่ที่</label>
+                <input type="text" id="applicant-moo" class="form-input" placeholder="ใส่ - หากไม่มี">
+              </div>
+              <div class="form-col-3 form-field">
+                <label class="form-label" for="applicant-soi">ตรอก/ซอย</label>
+                <input type="text" id="applicant-soi" class="form-input" placeholder="ใส่ - หากไม่มี">
+              </div>
+              <div class="form-col-3 form-field">
+                <label class="form-label" for="applicant-road">ถนน</label>
+                <input type="text" id="applicant-road" class="form-input" placeholder="ใส่ - หากไม่มี">
+              </div>
+            </div>
+
+            <div class="form-group-row">
+              <div class="form-col-3 form-field">
+                <label class="form-label" for="applicant-subdistrict">ตำบล/แขวง<span class="required-mark">*</span></label>
+                <input type="text" id="applicant-subdistrict" class="form-input" required>
+              </div>
+              <div class="form-col-3 form-field">
+                <label class="form-label" for="applicant-district">อำเภอ/เขต<span class="required-mark">*</span></label>
+                <input type="text" id="applicant-district" class="form-input" required>
+              </div>
+              <div class="form-col-3 form-field">
+                <label class="form-label" for="applicant-province">จังหวัด<span class="required-mark">*</span></label>
+                <select id="applicant-province" class="form-select" required>
+                  <!-- รายชื่อ 77 จังหวัดจะถูกแทรกโดย JavaScript -->
+                </select>
+              </div>
+              <div class="form-col-3 form-field">
+                <label class="form-label" for="applicant-postalcode">รหัสไปรษณีย์ (5 หลัก)<span class="required-mark">*</span></label>
+                <input type="text" id="applicant-postalcode" class="form-input" maxlength="5" required>
+              </div>
+            </div>
+
+            <div class="form-group-row">
+              <div class="form-col-6 form-field">
+                <label class="form-label" for="applicant-phone">หมายเลขโทรศัพท์ที่ติดต่อได้ (10 หลัก)<span class="required-mark">*</span></label>
+                <input type="tel" id="applicant-phone" class="form-input" maxlength="10" placeholder="08xxxxxxxx" required>
+                <span class="field-hint">ใช้สำหรับติดต่อแจ้งผลและรับข้อมูลสำคัญ</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ข้อที่ 5 ข้อมูลการศึกษาเดิม -->
+          <div class="form-section-block">
+            <div class="form-section-title">ข้อ 5 ข้อมูลการศึกษาเดิม / กำลังศึกษา</div>
+            
+            <div class="form-group-row">
+              <div class="form-col-4 form-field">
+                <label class="form-label" for="applicant-current-level">ระดับชั้นเดิม<span class="required-mark">*</span></label>
+                <select id="applicant-current-level" class="form-select" required>
+                  <option value="">-- เลือกระดับชั้น --</option>
+                  <option value="ม.3">มัธยมศึกษาปีที่ 3 (ม.3)</option>
+                  <option value="ปวช.3">ประกาศนียบัตรวิชาชีพปีที่ 3 (ปวช.3)</option>
+                  <option value="ม.6">มัธยมศึกษาปีที่ 6 (ม.6)</option>
+                  <option value="กศน.">การศึกษานอกระบบ (กศน./สกร.)</option>
+                  <option value="อื่นๆ">อื่นๆ</option>
+                </select>
+              </div>
+
+              <div class="form-col-4 form-field">
+                <label class="form-label" for="applicant-school-name">ชื่อโรงเรียน / สถานศึกษาเดิม<span class="required-mark">*</span></label>
+                <input type="text" id="applicant-school-name" class="form-input" placeholder="เช่น โรงเรียนเฉลิมพระเกียรติ..." required>
+              </div>
+
+              <div class="form-col-4 form-field">
+                <label class="form-label" for="applicant-school-location">ที่ตั้งโรงเรียนเดิม (อำเภอ, จังหวัด)<span class="required-mark">*</span></label>
+                <input type="text" id="applicant-school-location" class="form-input" placeholder="เช่น อ.เฉลิมพระเกียรติ จ.สระบุรี" required>
+              </div>
+            </div>
+
+            <div class="form-group-row">
+              <div class="form-col-4 form-field">
+                <label class="form-label" for="applicant-gpax">ผลการเรียนเฉลี่ยสะสม 5 ภาคเรียน (GPAX)<span class="required-mark">*</span></label>
+                <input type="number" id="applicant-gpax" class="form-input" step="0.01" min="0.00" max="4.00" placeholder="เช่น 3.50" required>
+              </div>
+
+              <div class="form-col-8 form-field" id="old-major-group" style="display: none;">
+                <label class="form-label" for="applicant-old-major">สาขาวิชาเดิม (สำหรับผู้สมัครระดับ ปวส.)</label>
+                <input type="text" id="applicant-old-major" class="form-input" placeholder="เช่น ช่างไฟฟ้า, การบัญชี, มัธยมปลาย แผนวิทย์-คณิต">
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ข้อที่ 6 สาขาวิชาที่ต้องการสมัคร -->
+          <div class="form-section-block">
+            <div class="form-section-title">ข้อ 6 สาขาวิชาที่ต้องการสมัครคัดเลือก</div>
+            
+            <div class="form-group-row">
+              <div class="form-col-6 form-field">
+                <label class="form-label" for="applicant-branch1">สาขาวิชาที่ต้องการสมัคร (ลำดับที่ 1)<span class="required-mark">*</span></label>
+                <select id="applicant-branch1" class="form-select" required>
+                  <option value="">-- กำลังโหลดรายชื่อสาขาวิชา --</option>
+                </select>
+              </div>
+
+              <div class="form-col-6 form-field" id="branch2-group">
+                <label class="form-label" for="applicant-branch2">สาขาวิชาที่ต้องการสมัคร (ลำดับที่ 2 - เฉพาะ ปวช.)<span class="required-mark">*</span></label>
+                <select id="applicant-branch2" class="form-select">
+                  <option value="">-- กำลังโหลดรายชื่อสาขาวิชา --</option>
+                </select>
+                <span class="field-hint">ต้องไม่ซ้ำกับลำดับที่ 1</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- อัปโหลดเอกสารหลักฐาน (JPG/PNG/PDF ไม่เกิน 5 MB) -->
+          <div class="form-section-block">
+            <div class="form-section-title">เอกสารและหลักฐานประกอบการสมัคร (ไฟล์ JPG, PNG, PDF ขนาดไม่เกิน 5 MB ต่อไฟล์)</div>
+
+            <div class="form-group-row">
+              <div class="form-col-6 form-field">
+                <label class="form-label">1. รูปถ่ายขนาด 1 นิ้ว (หน้าตรง ไม่สวมหมวก ไม่สวมแว่น)<span class="required-mark">*</span></label>
+                <div class="file-upload-block">
+                  <input type="file" id="upload-photo" accept="image/jpeg,image/png" class="form-input">
+                  <div id="photo-status-text" class="file-status-text">ยังไม่ได้เลือกไฟล์</div>
+                </div>
+              </div>
+
+              <div class="form-col-6 form-field">
+                <label class="form-label">2. เอกสารแสดงผลการเรียนเฉลี่ยสะสม 5 ภาคเรียน (ปพ.1)<span class="required-mark">*</span></label>
+                <div class="file-upload-block">
+                  <input type="file" id="upload-transcript" accept="image/jpeg,image/png,application/pdf" class="form-input">
+                  <div id="transcript-status-text" class="file-status-text">ยังไม่ได้เลือกไฟล์</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group-row">
+              <div class="form-col-6 form-field">
+                <label class="form-label">3. สำเนาบัตรประจำตัวประชาชน หรือสำเนาทะเบียนบ้าน<span class="required-mark">*</span></label>
+                <div class="file-upload-block">
+                  <input type="file" id="upload-idcard" accept="image/jpeg,image/png,application/pdf" class="form-input">
+                  <div id="idcard-status-text" class="file-status-text">ยังไม่ได้เลือกไฟล์</div>
+                </div>
+              </div>
+
+              <div class="form-col-6 form-field">
+                <label class="form-label">4. สำเนาเกียรติบัตร / ประกาศนียบัตรผลงาน (ถ้ามี)</label>
+                <div class="file-upload-block">
+                  <input type="file" id="upload-portfolio" accept="image/jpeg,image/png,application/pdf" class="form-input">
+                  <div id="portfolio-status-text" class="file-status-text">ยังไม่ได้เลือกไฟล์ (ไม่บังคับ)</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ข้อความยินยอมตาม พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล (PDPA) -->
+          <div class="pdpa-box">
+            <div class="pdpa-title">การยินยอมให้จัดเก็บและประมวลผลข้อมูลส่วนบุคคล (PDPA)</div>
+            <div class="pdpa-text">
+              วิทยาลัยเทคนิคท่าหลวงซิเมนต์ไทยอนุสรณ์ จะจัดเก็บ ใช้ และประมวลผลข้อมูลส่วนบุคคลของท่านและเอกสารหลักฐานที่แนบส่งนี้ เพื่อประโยชน์ในการดำเนินการรับสมัคร คัดเลือก ตรวจสอบคุณสมบัติ จัดทำสถิติ และการขึ้นทะเบียนเป็นนักเรียน นักศึกษา ตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 โดยจะไม่นำไปเปิดเผยแก่บุคคลภายนอกโดยไม่ได้รับอนุญาต
+            </div>
+            <label class="checkbox-item">
+              <input type="checkbox" id="pdpa-consent-checkbox" required>
+              <span><strong>ข้าพเจ้าขอรับรองว่าข้อมูลและเอกสารหลักฐานทั้งหมดเป็นความจริงทุกประการ</strong> และยินยอมให้วิทยาลัยฯ จัดเก็บและประมวลผลข้อมูลส่วนบุคคลตามวัตถุประสงค์ข้างต้น</span>
+            </label>
+          </div>
+
+          <div style="text-align: center; margin-top: 24px;">
+            <button type="submit" id="btn-submit-application" class="btn btn-primary" style="padding: 12px 36px; font-size: 16px;">
+              ยืนยันการส่งใบสมัคร
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+    </section>
+
+    <!-- 3. หน้าตรวจสอบสถานะ (Status Check Section) -->
+    <section id="section-status" class="page-section">
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">ตรวจสอบสถานะการสมัครเรียนออนไลน์ (โควตา 2570)</h2>
+          <span class="panel-subtitle">กรุณากรอกเลขประจำตัวประชาชน 13 หลักของผู้สมัครเพื่อค้นหาข้อมูล</span>
+        </div>
+
+        <div class="status-search-card">
+          <div class="form-field" style="margin-bottom: 16px;">
+            <label class="form-label" for="search-national-id">เลขประจำตัวประชาชน 13 หลัก</label>
+            <input type="text" id="search-national-id" class="form-input" maxlength="13" placeholder="ระบุเลขประจำตัวประชาชน 13 หลัก">
+          </div>
+          <button type="button" id="btn-check-status" class="btn btn-primary btn-block">ตรวจสอบสถานะ</button>
+        </div>
+
+        <div id="status-notfound-alert" class="official-notice-box" style="display: none; border-left-color: var(--danger-color); color: var(--danger-color); max-width: 600px; margin: 0 auto;"></div>
+
+        <!-- กล่องแสดงผลสถานะ -->
+        <div id="status-result-card" class="status-result-card" style="display: none;">
+          <div class="status-result-header">
+            <div>
+              <span style="font-size: 13px; color: var(--text-muted);">เลขที่ใบสมัคร:</span>
+              <strong id="status-app-no" style="font-size: 18px; color: var(--primary-color); margin-left: 6px;"></strong>
+            </div>
+            <div id="status-badge-container"></div>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-item">
+              <div class="info-item-label">ชื่อ - สกุล ผู้สมัคร</div>
+              <div class="info-item-val" id="status-app-name"></div>
+            </div>
+            <div class="info-item">
+              <div class="info-item-label">ระดับการศึกษาที่สมัคร</div>
+              <div class="info-item-val" id="status-app-level"></div>
+            </div>
+            <div class="info-item">
+              <div class="info-item-label">สาขาวิชาที่สมัคร</div>
+              <div class="info-item-val" id="status-app-branch"></div>
+            </div>
+            <div class="info-item">
+              <div class="info-item-label">วันเวลาที่ยื่นสมัคร</div>
+              <div class="info-item-val" id="status-app-date"></div>
+            </div>
+            <div class="info-item" id="status-studentid-group" style="display: none;">
+              <div class="info-item-label">รหัสนักศึกษา (หลังมอบตัว)</div>
+              <div class="info-item-val" id="status-studentid-val" style="color: var(--primary-color);"></div>
+            </div>
+          </div>
+
+          <!-- กล่องข้อความ/หมายเหตุจากเจ้าหน้าที่ -->
+          <div id="status-note-container" class="staff-note-box" style="display: none;">
+            <strong>ข้อความแจ้งจากเจ้าหน้าที่ทะเบียน:</strong>
+            <p id="status-note-text" style="margin-top: 4px; font-size: 14px;"></p>
+          </div>
+
+          <!-- กล่องอัปโหลดเอกสารแก้ไขกรณีสถานะเป็น "เอกสารไม่ครบ" -->
+          <div id="reupload-docs-card" style="display: none; border: 1px solid #FCA5A5; background-color: #FEF2F2; padding: 18px; border-radius: var(--radius); margin-bottom: 20px;">
+            <h4 style="color: var(--danger-color); font-size: 15px; margin-bottom: 8px;">ส่งเอกสารแก้ไขเพิ่มเติม</h4>
+            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">เนื่องจากเอกสารเดิมไม่สมบูรณ์หรือไม่ชัดเจน ขอให้ท่านแนบไฟล์เอกสารที่ถูกต้องเพื่อส่งให้เจ้าหน้าที่ตรวจสอบใหม่อีกครั้ง</p>
+            <div class="form-group-row">
+              <div class="form-col-6 form-field">
+                <label class="form-label">ประเภทเอกสารที่ต้องการแก้ไข</label>
+                <select id="reupload-doctype-select" class="form-select">
+                  <option value="GPAX_TRANSCRIPT">เอกสารแสดงผลการเรียน (ปพ.1)</option>
+                  <option value="CITIZEN_ID_CARD">สำเนาบัตรประชาชน / ทะเบียนบ้าน</option>
+                  <option value="PHOTO_1INCH">รูปถ่าย 1 นิ้ว</option>
+                  <option value="CERTIFICATE">เกียรติบัตร / ผลงาน</option>
+                </select>
+              </div>
+              <div class="form-col-6 form-field">
+                <label class="form-label">เลือกไฟล์ใหม่ (JPG, PNG, PDF ไม่เกิน 5 MB)</label>
+                <input type="file" id="reupload-file-input" class="form-input" accept="image/jpeg,image/png,application/pdf">
+              </div>
+            </div>
+            <div style="text-align: right; margin-top: 8px;">
+              <button type="button" id="btn-submit-reupload" class="btn btn-danger btn-sm">ส่งเอกสารแก้ไข</button>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 10px;">
+            <button type="button" id="btn-reprint-application" class="btn btn-secondary">
+              พิมพ์ / ดาวน์โหลดใบสมัคร (PDF)
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4. ส่วนเจ้าหน้าที่ (Staff Portal) -->
+    <section id="section-staff" class="page-section">
+      
+      <!-- หน้าเข้าสู่ระบบสำหรับเจ้าหน้าที่ -->
+      <div id="staff-login-view" class="staff-login-box">
+        <h3 style="font-size: 17px; font-weight: 700; color: var(--primary-color); border-bottom: 1px solid var(--border-light); padding-bottom: 8px; margin-bottom: 16px; text-align: center;">
+          เข้าสู่ระบบเจ้าหน้าที่รับสมัครและงานทะเบียน
+        </h3>
+        <p style="font-size: 12px; color: var(--text-muted); text-align: center; margin-bottom: 16px;">
+          (บัญชีทดสอบ: admin / admin2570 หรือ registrar / reg2570)
+        </p>
+
+        <form id="staff-login-form">
+          <div class="form-field" style="margin-bottom: 12px;">
+            <label class="form-label" for="staff-username">ชื่อผู้ใช้ (Username)</label>
+            <input type="text" id="staff-username" class="form-input" required placeholder="admin หรือ registrar">
+          </div>
+          <div class="form-field" style="margin-bottom: 18px;">
+            <label class="form-label" for="staff-password">รหัสผ่าน (Password)</label>
+            <input type="password" id="staff-password" class="form-input" required placeholder="รหัสผ่าน">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">เข้าสู่ระบบ</button>
+        </form>
+      </div>
+
+      <!-- มุมมองเจ้าหน้าที่หลังเข้าสู่ระบบ -->
+      <div id="staff-logged-view" style="display: none;">
+        
+        <div class="staff-header-bar">
+          <div>
+            <strong>เจ้าหน้าที่ผู้ใช้งาน:</strong> <span id="staff-user-name"></span>
+            <span id="staff-user-role" style="color: var(--accent-color); font-weight: 600; margin-left: 6px;"></span>
+          </div>
+          <div>
+            <button type="button" id="btn-staff-logout" class="btn btn-secondary btn-sm">ออกจากระบบ</button>
+          </div>
+        </div>
+
+        <!-- แถบเครื่องมือสลับแท็บ -->
+        <div class="staff-tabs">
+          <button class="staff-tab-btn active" data-tab="tab-staff-applicants">รายชื่อผู้สมัคร (ทะเบียน)</button>
+          <button class="staff-tab-btn" data-tab="tab-staff-dashboard">แดชบอร์ดสรุปผล</button>
+          <button class="staff-tab-btn" data-tab="tab-staff-settings">ตั้งค่าระบบ</button>
+        </div>
+
+        <!-- แท็บ 1: ตารางรายชื่อผู้สมัคร -->
+        <div id="tab-staff-applicants" class="staff-tab-content">
+          
+          <div class="filter-toolbar">
+            <div style="flex: 1 1 200px;">
+              <input type="text" id="filter-search" class="form-input" placeholder="ค้นหา: เลขใบสมัคร, ชื่อ-สกุล, เลขบัตรประชาชน...">
+            </div>
+            <div>
+              <select id="filter-level" class="form-select">
+                <option value="">ทุกระดับการศึกษา</option>
+                <option value="ปวช">ปวช.</option>
+                <option value="ปวส">ปวส.</option>
+              </select>
+            </div>
+            <div>
+              <select id="filter-status" class="form-select">
+                <option value="">ทุกสถานะ</option>
+                <option value="รอตรวจสอบ">รอตรวจสอบ</option>
+                <option value="เอกสารไม่ครบ">เอกสารไม่ครบ</option>
+                <option value="ผ่านการคัดเลือก">ผ่านการคัดเลือก</option>
+                <option value="ไม่ผ่าน">ไม่ผ่าน</option>
+                <option value="มอบตัวแล้ว">มอบตัวแล้ว</option>
+              </select>
+            </div>
+            <div>
+              <button type="button" id="btn-export-csv" class="btn btn-success btn-sm">
+                ส่งออก Excel / CSV
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="registry-table">
+              <thead>
+                <tr>
+                  <th style="width: 45px; text-align: center;">ลำดับ</th>
+                  <th style="width: 100px;">เลขที่สมัคร</th>
+                  <th>ชื่อ - นามสกุล</th>
+                  <th style="width: 130px;">ระดับ</th>
+                  <th>สาขาวิชาที่เลือก</th>
+                  <th style="width: 80px; text-align: center;">GPAX</th>
+                  <th style="width: 110px; text-align: center;">สถานะ</th>
+                  <th style="width: 130px; text-align: center;">การดำเนินการ</th>
+                </tr>
+              </thead>
+              <tbody id="applicants-tbody">
+                <!-- ข้อมูลจะถูกโหลดโดย JavaScript -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+        <!-- แท็บ 2: แดชบอร์ดสรุปสถิติ -->
+        <div id="tab-staff-dashboard" class="staff-tab-content" style="display: none;">
+          
+          <div class="stat-cards-grid">
+            <div class="stat-card">
+              <div class="stat-num" id="stat-total-count">0</div>
+              <div class="stat-title">ผู้สมัครทั้งหมด</div>
+            </div>
+            <div class="stat-card" style="border-left-color: #B45309;">
+              <div class="stat-num" id="stat-pending-count" style="color: #B45309;">0</div>
+              <div class="stat-title">รอตรวจสอบเอกสาร</div>
+            </div>
+            <div class="stat-card" style="border-left-color: #15803D;">
+              <div class="stat-num" id="stat-approved-count" style="color: #15803D;">0</div>
+              <div class="stat-title">ผ่านการคัดเลือก</div>
+            </div>
+            <div class="stat-card" style="border-left-color: #B91C1C;">
+              <div class="stat-num" id="stat-incomplete-count" style="color: #B91C1C;">0</div>
+              <div class="stat-title">เอกสารไม่สมบูรณ์</div>
+            </div>
+            <div class="stat-card" style="border-left-color: #1E40AF;">
+              <div class="stat-num" id="stat-enrolled-count" style="color: #1E40AF;">0</div>
+              <div class="stat-title">มอบตัวแล้ว</div>
+            </div>
+          </div>
+
+          <!-- กราฟจำนวนผู้สมัครแยกตามสาขาวิชา -->
+          <div class="chart-container-box">
+            <h4 style="font-size: 15px; font-weight: 700; color: var(--primary-color); margin-bottom: 14px;">
+              สถิติจำนวนผู้สมัครแยกตามสาขาวิชา (ลำดับที่ 1)
+            </h4>
+            <div style="height: 320px; width: 100%;">
+              <canvas id="branchChart"></canvas>
+            </div>
+          </div>
+
+          <!-- ตารางสรุปโรงเรียนเดิมและจังหวัดยอดนิยม -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
+            <div class="panel" style="margin-bottom: 0;">
+              <h4 style="font-size: 14px; font-weight: 700; color: var(--primary-color); margin-bottom: 10px;">
+                5 ลำดับจังหวัดที่มีผู้สมัครสูงสุด
+              </h4>
+              <table class="schedule-table">
+                <thead>
+                  <tr><th>จังหวัด</th><th style="text-align: right;">จำนวน</th></tr>
+                </thead>
+                <tbody id="stats-prov-tbody"></tbody>
+              </table>
+            </div>
+
+            <div class="panel" style="margin-bottom: 0;">
+              <h4 style="font-size: 14px; font-weight: 700; color: var(--primary-color); margin-bottom: 10px;">
+                5 ลำดับโรงเรียนเดิมที่มีผู้สมัครสูงสุด
+              </h4>
+              <table class="schedule-table">
+                <thead>
+                  <tr><th>โรงเรียนเดิม</th><th style="text-align: right;">จำนวน</th></tr>
+                </thead>
+                <tbody id="stats-school-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- แท็บ 3: ตั้งค่าระบบ (เฉพาะผู้ดูแลระบบ) -->
+        <div id="tab-staff-settings" class="staff-tab-content" style="display: none;">
+          <div class="panel">
+            <div class="panel-header">
+              <h2 class="panel-title">ตั้งค่าระบบรับสมัครออนไลน์</h2>
+              <span class="panel-subtitle">การเปิด-ปิดระบบ, กำหนดการ, สาขาวิชา และการเชื่อมต่อ Google Sheets Backend</span>
+            </div>
+
+            <form id="settings-config-form">
+              
+              <div class="form-section-block">
+                <div class="form-section-title">1. สถานะและกำหนดการรับสมัคร</div>
+                <div class="checkbox-group" style="margin-bottom: 16px;">
+                  <label class="checkbox-item">
+                    <input type="checkbox" id="setting-system-open">
+                    <span><strong>เปิดรับสมัครออนไลน์</strong> (หากไม่ทำเครื่องหมาย หน้าฟอร์มสมัครจะปิดการใช้งาน)</span>
+                  </label>
+                </div>
+
+                <div class="form-group-row">
+                  <div class="form-col-6 form-field">
+                    <label class="form-label" for="setting-start-date">วันเริ่มต้นรับสมัคร</label>
+                    <input type="date" id="setting-start-date" class="form-input">
+                  </div>
+                  <div class="form-col-6 form-field">
+                    <label class="form-label" for="setting-end-date">วันสิ้นสุดรับสมัคร</label>
+                    <input type="date" id="setting-end-date" class="form-input">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section-block">
+                <div class="form-section-title">2. ข้อความประกาศหน้าแรก</div>
+                <div class="form-field" style="margin-bottom: 12px;">
+                  <label class="form-label" for="setting-announcement-title">หัวข้อประกาศ</label>
+                  <input type="text" id="setting-announcement-title" class="form-input">
+                </div>
+                <div class="form-field">
+                  <label class="form-label" for="setting-announcement-body">รายละเอียดประกาศ</label>
+                  <textarea id="setting-announcement-body" class="form-textarea" rows="3"></textarea>
+                </div>
+              </div>
+
+              <div class="form-section-block">
+                <div class="form-section-title">3. รายชื่อสาขาวิชาที่เปิดรับ (1 บรรทัดต่อ 1 สาขา)</div>
+                <div class="form-group-row">
+                  <div class="form-col-6 form-field">
+                    <label class="form-label" for="setting-pvc-branches">สาขาวิชา ระดับ ปวช.</label>
+                    <textarea id="setting-pvc-branches" class="form-textarea" rows="11"></textarea>
+                  </div>
+                  <div class="form-col-6 form-field">
+                    <label class="form-label" for="setting-pvs-branches">สาขาวิชา ระดับ ปวส.</label>
+                    <textarea id="setting-pvs-branches" class="form-textarea" rows="11"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section-block">
+                <div class="form-section-title">4. การเชื่อมต่อ Google Apps Script Web App URL</div>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 10px;">
+                  ระบุ URL ของ Google Apps Script ที่ได้จากการ Deploy เป็น Web App (เช่น https://script.google.com/macros/s/.../exec) เพื่อเชื่อมโยงฐานข้อมูลกับ Google Sheets และ Google Drive
+                </p>
+                <div class="form-field">
+                  <label class="form-label" for="setting-gas-url">Google Apps Script Web App URL</label>
+                  <input type="url" id="setting-gas-url" class="form-input" placeholder="https://script.google.com/macros/s/AKfycb.../exec">
+                  <span class="field-hint">หากเว้นว่างไว้ ระบบจะทำงานในโหมด Standalone / Mock ด้วย LocalStorage</span>
+                </div>
+              </div>
+
+              <div style="text-align: right;">
+                <button type="submit" class="btn btn-primary">บันทึกการตั้งค่า</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- หน้าต่าง Modal สำหรับตรวจเอกสาร เปลี่ยนสถานะ และมอบตัว -->
+  <div id="applicant-detail-modal" class="modal-overlay">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modal-detail-title" class="modal-title">รายละเอียดใบสมัคร</h3>
+        <button type="button" class="modal-close-btn" onclick="document.getElementById('applicant-detail-modal').classList.remove('active')">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        
+        <div style="display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap;">
+          <div id="detail-photo-preview" style="width: 100px; height: 130px; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; background: #F8FAFC;"></div>
+          <div style="flex: 1 1 300px;">
+            <div style="font-size: 16px; font-weight: 700; color: var(--primary-color);" id="detail-fullname"></div>
+            <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">
+              <strong>เลขบัตรประชาชน:</strong> <span id="detail-nationalid"></span> | 
+              <strong>วันเกิด:</strong> <span id="detail-birthdate"></span>
+            </div>
+            <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">
+              <strong>ระดับที่สมัคร:</strong> <span id="detail-level"></span> | 
+              <span id="detail-branches"></span>
+            </div>
+            <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">
+              <strong>ผลการเรียนเฉลี่ย (GPAX):</strong> <span id="detail-gpax" style="font-weight: 700; color: var(--primary-color);"></span> | 
+              <strong>โรงเรียนเดิม:</strong> <span id="detail-school"></span>
+            </div>
+            <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">
+              <strong>โทรศัพท์:</strong> <span id="detail-phone"></span>
+            </div>
+            <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">
+              <strong>ที่อยู่:</strong> <span id="detail-address"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- รายการเอกสารแนบ -->
+        <h4 style="font-size: 14px; font-weight: 700; color: var(--primary-color); border-bottom: 1px solid var(--border-light); padding-bottom: 4px; margin-bottom: 10px;">
+          เอกสารหลักฐานที่แนบส่ง
+        </h4>
+        <div id="detail-docs-list" style="margin-bottom: 18px;"></div>
+
+        <!-- ส่วนเปลี่ยนสถานะและบันทึกหมายเหตุ -->
+        <div style="background-color: #F8FAFC; border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius); margin-bottom: 16px;">
+          <h4 style="font-size: 14px; font-weight: 700; color: var(--primary-color); margin-bottom: 10px;">
+            การตรวจสอบและเปลี่ยนสถานะ
+          </h4>
+          <div class="form-group-row">
+            <div class="form-col-5 form-field">
+              <label class="form-label" for="modal-status-select">สถานะใบสมัคร</label>
+              <select id="modal-status-select" class="form-select">
+                <option value="รอตรวจสอบ">รอตรวจสอบ</option>
+                <option value="เอกสารไม่ครบ">เอกสารไม่ครบ (ส่งกลับแก้ไข)</option>
+                <option value="ผ่านการคัดเลือก">ผ่านการคัดเลือก</option>
+                <option value="ไม่ผ่าน">ไม่ผ่านการคัดเลือก</option>
+                <option value="มอบตัวแล้ว">มอบตัวแล้ว</option>
+              </select>
+            </div>
+            <div class="form-col-7 form-field">
+              <label class="form-label" for="modal-status-note">หมายเหตุแจ้งผู้สมัคร / เจ้าหน้าที่</label>
+              <input type="text" id="modal-status-note" class="form-input" placeholder="เช่น เอกสาร ปพ.1 ไม่ชัดเจน ขอให้ส่งใหม่">
+            </div>
+          </div>
+          <div style="text-align: right; margin-top: 8px;">
+            <button type="button" id="btn-save-modal-status" class="btn btn-primary btn-sm">บันทึกการเปลี่ยนสถานะ</button>
+          </div>
+        </div>
+
+        <!-- ส่วนมอบตัว (ถ้าผ่านการคัดเลือก) -->
+        <div id="modal-enroll-section" style="display: none; background-color: #EFF6FF; border: 1px solid #BFDBFE; padding: 14px; border-radius: var(--radius); margin-bottom: 16px;">
+          <h4 style="font-size: 14px; font-weight: 700; color: #1E40AF; margin-bottom: 6px;">
+            งานทะเบียนและมอบตัว
+          </h4>
+          <p id="modal-enroll-status-text" style="font-size: 13px; color: var(--text-secondary); margin-bottom: 10px;"></p>
+          <button type="button" id="btn-enroll-action" class="btn btn-success btn-sm">บันทึกการมอบตัวและออกรหัสนักศึกษา</button>
+        </div>
+
+        <!-- ประวัติการเปลี่ยนสถานะ (Audit Log) -->
+        <h4 style="font-size: 14px; font-weight: 700; color: var(--primary-color); border-bottom: 1px solid var(--border-light); padding-bottom: 4px; margin-bottom: 8px;">
+          ประวัติการเปลี่ยนสถานะ (Audit Trail)
+        </h4>
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th style="width: 140px;">วันเวลา</th>
+              <th style="width: 110px;">สถานะ</th>
+              <th>หมายเหตุ</th>
+              <th style="width: 120px;">ผู้ดำเนินการ</th>
+            </tr>
+          </thead>
+          <tbody id="detail-log-tbody"></tbody>
+        </table>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" id="btn-modal-print-doc" class="btn btn-secondary">พิมพ์ใบสมัคร (PDF)</button>
+        <button type="button" class="btn btn-secondary" onclick="document.getElementById('applicant-detail-modal').classList.remove('active')">ปิดหน้าต่าง</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- หน้าต่าง Modal ยืนยันการส่งใบสมัครสำเร็จ -->
+  <div id="submission-success-modal" class="modal-overlay">
+    <div class="modal-dialog" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3 class="modal-title">ยื่นใบสมัครสำเร็จ</h3>
+        <button type="button" class="modal-close-btn" onclick="document.getElementById('submission-success-modal').classList.remove('active')">&times;</button>
+      </div>
+      <div class="modal-body" style="text-align: center; padding: 24px;">
+        <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 4px;">เลขที่ใบสมัครของท่าน</div>
+        <div id="success-app-no" style="font-size: 28px; font-weight: 700; color: var(--primary-color); margin-bottom: 12px; letter-spacing: 1px;"></div>
+        <div style="font-size: 15px; margin-bottom: 4px;"><strong id="success-app-name"></strong></div>
+        <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 18px;" id="success-app-branch"></div>
+        <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+          ระบบได้บันทึกข้อมูลการสมัครของท่านเรียบร้อยแล้ว กรุณาจดจำเลขที่ใบสมัคร หรือพิมพ์ใบสมัครเก็บไว้เป็นหลักฐานเพื่อนำมายื่นในวันสอบสัมภาษณ์
+        </p>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+          <button type="button" id="btn-print-from-success" class="btn btn-primary">พิมพ์ / ดาวน์โหลดใบสมัคร (PDF)</button>
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('submission-success-modal').classList.remove('active')">ปิด</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ภาชนะสำหรับสร้างใบสมัครขนาด A4 สำหรับการสั่งพิมพ์ (Print / PDF) -->
+  <div id="official-print-form-container" class="print-application-container"></div>
+
+  <!-- ส่วนท้ายหน้าเว็บ (Footer) -->
+  <footer class="official-footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h5>วิทยาลัยเทคนิคท่าหลวงซิเมนต์ไทยอนุสรณ์</h5>
+        <p>สังกัดสำนักงานคณะกรรมการการอาชีวศึกษา กระทรวงศึกษาธิการ</p>
+        <p>เลขที่ 113 หมู่ 6 ถนนสระบุรี-หล่มสัก ตำบลบ้านแก้ง อำเภอเฉลิมพระเกียรติ จังหวัดสระบุรี 18000</p>
+        <p>โทรศัพท์: 036-347-190, 036-347-191 | โทรสาร: 036-347-192</p>
+        <p>เว็บไซต์หลัก: <a href="https://www.thaluang.ac.th" target="_blank" style="color: #93C5FD; text-decoration: none;">www.thaluang.ac.th</a></p>
+      </div>
+      <div class="footer-col">
+        <h5>งานรับสมัครและทะเบียน</h5>
+        <p>เปิดให้บริการในวันและเวลาราชการ</p>
+        <p>จันทร์ – ศุกร์ เวลา 08.30 – 16.30 น.</p>
+        <p>อีเมลงานรับสมัคร: admission@thaluang.ac.th</p>
+      </div>
+    </div>
+    <div class="footer-developer-credit">
+      ระบบรับสมัครเรียนออนไลน์ (ประเภทโควตา) ประจำปีการศึกษา 2570 | พัฒนาโดย แผนกวิชาเทคโนโลยีคอมพิวเตอร์ วิทยาลัยเทคนิคท่าหลวงซิเมนต์ไทยอนุสรณ์
+    </div>
+  </footer>
+
+  <script src="js/provinces.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
