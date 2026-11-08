@@ -6,19 +6,19 @@ echo  สคริปต์นำโครงการขึ้น GitHub แล
 echo ======================================================================
 echo.
 
-set PATH=C:\Users\TL\.mingit\cmd;%PATH%
-
-echo กรุณาสร้าง Repository เปล่าบน GitHub (เช่น thaluang-admission-2570)
-echo จากนั้นคัดลอก URL ของ Repository มาวางที่นี่
-echo ตัวอย่าง: https://github.com/YourUsername/thaluang-admission-2570.git
-echo.
-set /p REPO_URL="กรุณากรอก GitHub Repository URL: "
-
-if "%REPO_URL%"=="" (
-    echo [ผิดพลาด] ไม่ได้กรอก URL กรุณาลองใหม่อีกครั้ง
+where git >nul 2>nul
+if %errorlevel% neq 0 (
+    echo [ผิดพลาด] ไม่พบโปรแกรม Git ในเครื่อง กรุณาติดตั้ง Git ก่อนที่ https://git-scm.com/
     pause
     exit /b
 )
+
+set DEFAULT_URL=https://github.com/WAWAATxceaa/registration-.git
+echo กด Enter ทันทีเพื่อใช้ค่าเริ่มต้น (%DEFAULT_URL%)
+echo หรือกรอก GitHub Repository URL ใหม่:
+set /p REPO_URL="URL: "
+
+if "%REPO_URL%"=="" set REPO_URL=%DEFAULT_URL%
 
 echo.
 echo กำลังตั้งค่า Remote และนำโค้ดขึ้น GitHub...
