@@ -308,11 +308,17 @@ body {
 }
 
 .form-col-12 { grid-column: span 12; }
+.form-col-11 { grid-column: span 11; }
+.form-col-10 { grid-column: span 10; }
+.form-col-9  { grid-column: span 9; }
 .form-col-8  { grid-column: span 8; }
+.form-col-7  { grid-column: span 7; }
 .form-col-6  { grid-column: span 6; }
+.form-col-5  { grid-column: span 5; }
 .form-col-4  { grid-column: span 4; }
 .form-col-3  { grid-column: span 3; }
 .form-col-2  { grid-column: span 2; }
+.form-col-1  { grid-column: span 1; }
 
 .form-field {
   display: flex;
@@ -1002,7 +1008,8 @@ body {
     text-align: center;
   }
 
-  .form-col-12, .form-col-8, .form-col-6, .form-col-4, .form-col-3, .form-col-2 {
+  .form-col-12, .form-col-11, .form-col-10, .form-col-9, .form-col-8, .form-col-7,
+  .form-col-6, .form-col-5, .form-col-4, .form-col-3, .form-col-2, .form-col-1 {
     grid-column: span 12;
   }
 
