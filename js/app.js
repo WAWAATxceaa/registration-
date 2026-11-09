@@ -160,7 +160,13 @@ class StorageService {
   // ตรวจสอบความพร้อมของเซิร์ฟเวอร์ Node.js และ Google Sheets
   async checkHealth() {
     try {
-      const res = await fetch(`${this.getApiBaseUrl()}/api/health`, { cache: 'no-store' });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3500);
+      const res = await fetch(`${this.getApiBaseUrl()}/api/health`, {
+        cache: 'no-store',
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
       if (res.ok) {
         const json = await res.json();
         return { online: true, ...json };
@@ -280,10 +286,6 @@ class StorageService {
         message: 'ข้อมูลทั้งหมดในเครื่องมีอยู่บน Google Sheets เรียบร้อยแล้ว'
       };
     }
-  }
-      academicYear: academicYear,
-      timestamp: newRecord.timestamp
-    };
   }
 
   saveApplicantLocal(formData, appNo) {
@@ -655,7 +657,7 @@ let currentUploadedFiles = {
   portfolio: null
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+function initApp() {
   checkServerConnectionStatus();
   setInterval(checkServerConnectionStatus, 8000);
 
@@ -666,7 +668,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initFormInteractions();
   initStatusCheckEvents();
   initStaffPortal();
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
 
 /**
  * ตรวจสอบสถานะการเชื่อมต่อระหว่างเบราว์เซอร์กับเซิร์ฟเวอร์ Node.js + Google Sheets
@@ -674,18 +682,29 @@ document.addEventListener('DOMContentLoaded', () => {
 async function checkServerConnectionStatus() {
   const pill = document.getElementById('sheets-connection-pill');
   const banner = document.getElementById('connection-status-banner');
-  const status = await storageService.checkHealth();
+  try {
+    const status = await storageService.checkHealth();
 
-  if (status.online) {
-    if (pill) {
-      pill.style.backgroundColor = '#DEF7EC';
-      pill.style.color = '#03543F';
-      pill.innerHTML = '<span style="font-size: 8px; color: #10B981;">●</span> Google Sheets พร้อมใช้งาน';
+    if (status && status.online) {
+      if (pill) {
+        pill.style.backgroundColor = '#DEF7EC';
+        pill.style.color = '#03543F';
+        pill.innerHTML = '<span style="font-size: 8px; color: #10B981;">●</span> Google Sheets พร้อมใช้งาน';
+      }
+      if (banner) {
+        banner.style.display = 'none';
+      }
+    } else {
+      if (pill) {
+        pill.style.backgroundColor = '#FEE2E2';
+        pill.style.color = '#991B1B';
+        pill.innerHTML = '<span style="font-size: 8px; color: #EF4444;">●</span> เซิร์ฟเวอร์ออฟไลน์ (ยังไม่ได้เปิด)';
+      }
+      if (banner) {
+        banner.style.display = 'block';
+      }
     }
-    if (banner) {
-      banner.style.display = 'none';
-    }
-  } else {
+  } catch (err) {
     if (pill) {
       pill.style.backgroundColor = '#FEE2E2';
       pill.style.color = '#991B1B';
