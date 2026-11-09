@@ -138,6 +138,35 @@
 
 ---
 
+---
+
+## การรันเซิร์ฟเวอร์ Node.js + Express (Google Sheets API v4)
+
+ระบบมี Backend ด้วย **Node.js + Express** ที่เชื่อมต่อกับ **Google Sheets API v4** โดยตรงผ่าน Service Account พร้อมเสิร์ฟหน้าเว็บในตัวเพื่อป้องกันปัญหา CORS
+
+### ขั้นตอนการเริ่มใช้งาน:
+1. **ติดตั้ง Dependencies:**
+   ```bash
+   npm install
+   ```
+2. **ตั้งค่าไฟล์ .env:**
+   ```env
+   PORT=3000
+   SPREADSHEET_ID=1FkdcIos-sEQUG7heSBcRNT9UfOniWsFwBg5jeMxARMs
+   SHEET_NAME=ชีต1
+   GOOGLE_CREDENTIALS_FILE=e:\pure-mission-514215-c0-525f8fb4d2e1.json
+   # หากรันบน Cloud สามารถใส่ JSON String ใน GOOGLE_CREDENTIALS_JSON ได้
+   ```
+3. **เริ่มรันเซิร์ฟเวอร์:**
+   ```bash
+   npm start
+   ```
+   หรือโหมดพัฒนา (Auto-reload):
+   ```bash
+   npm run dev
+   ```
+4. **เปิดใช้งาน:** เข้าเว็บได้ที่ http://localhost:3000
+
 ## บัญชีผู้ใช้สำหรับการทดสอบ (Default Accounts)
 
 | ชื่อผู้ใช้ (Username) | รหัสผ่าน (Password) | สิทธิ์ |

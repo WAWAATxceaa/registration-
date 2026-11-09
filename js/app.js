@@ -64,94 +64,8 @@ class StorageService {
     }
 
     if (!localStorage.getItem(this.STORAGE_KEY_APPLICANTS)) {
-      // ตัวอย่างข้อมูลตั้งต้น 2 รายการสำหรับทดสอบระบบ
-      const sampleApplicants = [
-        {
-          applicationNo: "Q70-0001",
-          timestamp: "2026-11-02 09:30:00",
-          academicYear: "2570",
-          level: "ปวช.",
-          title: "นาย",
-          fullName: "สมเกียรติ มั่นคง",
-          birthDate: "15 พฤษภาคม 2554",
-          nationalId: "1103702584128",
-          fatherName: "นายบุญมี มั่นคง",
-          fatherAge: "48",
-          fatherJob: "พนักงานบริษัท",
-          motherName: "นางสมศรี มั่นคง",
-          motherAge: "45",
-          motherJob: "ค้าขาย",
-          addressHouseNo: "45/2",
-          addressMoo: "3",
-          addressSoi: "-",
-          addressRoad: "พหลโยธิน",
-          addressSubdistrict: "บ้านแก้ง",
-          addressDistrict: "เฉลิมพระเกียรติ",
-          addressProvince: "สระบุรี",
-          addressPostalCode: "18000",
-          phone: "0891234567",
-          currentLevel: "ม.3",
-          schoolName: "โรงเรียนเฉลิมพระเกียรติวิทยา",
-          schoolLocation: "ต.บ้านแก้ง อ.เฉลิมพระเกียรติ จ.สระบุรี",
-          gpax: "3.75",
-          oldMajor: "-",
-          branchOrder1: "เทคโนโลยีสารสนเทศ",
-          branchOrder2: "เทคนิคคอมพิวเตอร์",
-          status: "ผ่านการคัดเลือก",
-          staffNote: "คุณสมบัติและเอกสารถูกต้องครบถ้วน ผ่านเกณฑ์โควตาสาขาวิชา",
-          studentId: "70201010001",
-          enrolledAt: "2026-11-05 14:15:00",
-          enrolledBy: "เจ้าหน้าที่ทะเบียน",
-          files: [
-            { docType: "PHOTO_1INCH", name: "photo_sample.jpg", url: "assets/logo.png" },
-            { docType: "GPAX_TRANSCRIPT", name: "transcript_5semesters.pdf", url: "#" },
-            { docType: "CITIZEN_ID_CARD", name: "id_card_copy.pdf", url: "#" }
-          ]
-        },
-        {
-          applicationNo: "Q70-0002",
-          timestamp: "2026-11-03 11:20:00",
-          academicYear: "2570",
-          level: "ปวส. (สายตรง)",
-          title: "นางสาว",
-          fullName: "นภัสสร รุ่งเรือง",
-          birthDate: "20 ตุลาคม 2551",
-          nationalId: "1199900876541",
-          fatherName: "นายประสิทธิ์ รุ่งเรือง",
-          fatherAge: "52",
-          fatherJob: "เกษตรกร",
-          motherName: "นางพรทิพย์ รุ่งเรือง",
-          motherAge: "50",
-          motherJob: "เกษตรกร",
-          addressHouseNo: "88",
-          addressMoo: "5",
-          addressSoi: "เทศบาล 4",
-          addressRoad: "สุวรรณศร",
-          addressSubdistrict: "บ้านหมอ",
-          addressDistrict: "บ้านหมอ",
-          addressProvince: "สระบุรี",
-          addressPostalCode: "18130",
-          phone: "0819876543",
-          currentLevel: "ปวช.3",
-          schoolName: "วิทยาลัยเทคนิคท่าหลวงซิเมนต์ไทยอนุสรณ์",
-          schoolLocation: "ต.บ้านแก้ง อ.เฉลิมพระเกียรติ จ.สระบุรี",
-          gpax: "3.42",
-          oldMajor: "การบัญชี",
-          branchOrder1: "การบัญชี",
-          branchOrder2: "",
-          status: "รอตรวจสอบ",
-          staffNote: "รอคณะกรรมการงานทะเบียนตรวจสอบคุณสมบัติและเอกสาร",
-          studentId: "",
-          enrolledAt: "",
-          enrolledBy: "",
-          files: [
-            { docType: "PHOTO_1INCH", name: "profile.jpg", url: "assets/logo.png" },
-            { docType: "GPAX_TRANSCRIPT", name: "transcript.pdf", url: "#" },
-            { docType: "CITIZEN_ID_CARD", name: "citizen_card.pdf", url: "#" }
-          ]
-        }
-      ];
-      localStorage.setItem(this.STORAGE_KEY_APPLICANTS, JSON.stringify(sampleApplicants));
+      // ค่าเริ่มต้นเป็น Array ว่าง เพื่อให้ระบบดึงข้อมูลจริงจาก Google Sheets ผ่าน Backend API
+      localStorage.setItem(this.STORAGE_KEY_APPLICANTS, JSON.stringify([]));
     }
 
     if (!localStorage.getItem(this.STORAGE_KEY_STATUS_LOG)) {
@@ -235,16 +149,64 @@ class StorageService {
     }
   }
 
-  // ยื่นใบสมัคร (Submit)
+  // ดึงข้อมูลผู้สมัครล่าสุดจาก Google Sheets ผ่าน Backend API
+  async syncApplicants() {
+    try {
+      const res = await fetch('/api/applicants');
+      if (res.ok) {
+        const json = await res.json();
+        if (json.success && Array.isArray(json.data)) {
+          localStorage.setItem(this.STORAGE_KEY_APPLICANTS, JSON.stringify(json.data));
+          return json.data;
+        }
+      }
+    } catch (e) {
+      console.warn("Backend API sync failed, using cached local data:", e);
+    }
+    return this.getApplicantsLocal();
+  }
+
+  // ยื่นใบสมัคร (Submit) - บันทึกลง Google Sheets ผ่าน Backend API
   async submitApplicant(formData) {
     const config = this.getConfig();
 
-    // ลองส่งผ่าน Google Apps Script API ถ้าตั้งค่าไว้
+    // 1. ส่งผ่าน Backend Express API (Google Sheets API v4)
+    try {
+      const res = await fetch('/api/applicants', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      const result = await res.json();
+
+      if (!res.ok || !result.success) {
+        return {
+          success: false,
+          message: result.message || 'เกิดข้อผิดพลาดในการบันทึกข้อมูล'
+        };
+      }
+
+      const appNo = result.applicationNo || result.data?.applicationNo;
+      this.saveApplicantLocal(result.data || formData, appNo);
+      this.addStatusLog(appNo, '', 'รอตรวจสอบ', 'ผู้สมัครยื่นใบสมัครผ่านระบบออนไลน์ (Google Sheets)', 'System');
+      await this.syncApplicants();
+
+      return {
+        success: true,
+        message: result.message || 'บันทึกข้อมูลการสมัครเรียบร้อยแล้ว',
+        applicationNo: appNo,
+        academicYear: result.academicYear || config.academicYear || '2570',
+        timestamp: result.timestamp
+      };
+    } catch (e) {
+      console.warn("Backend API call failed, trying GAS API or Local Storage fallback:", e);
+    }
+
+    // 2. Fallback: Google Apps Script API ถ้าตั้งค่าไว้
     if (config.gasApiUrl) {
       try {
         const gasResult = await this.callGasApi('submitApplication', 'POST', { data: formData });
         if (gasResult && gasResult.success) {
-          // เก็บสำเนาไว้ใน LocalStorage ด้วย
           this.saveApplicantLocal(formData, gasResult.applicationNo);
           return gasResult;
         }
@@ -253,12 +215,11 @@ class StorageService {
       }
     }
 
-    // Local Storage Fallback
+    // 3. Fallback: Local Storage Standalone Mode
     const applicants = this.getApplicantsLocal();
     const cleanId = String(formData.nationalId).trim();
     const academicYear = config.academicYear || '2570';
 
-    // ตรวจสอบเลขประจำตัวประชาชนซ้ำในปีการศึกษาเดียวกัน
     const isDup = applicants.some(a => a.nationalId === cleanId && a.academicYear === academicYear);
     if (isDup) {
       return {
@@ -267,7 +228,6 @@ class StorageService {
       };
     }
 
-    // ออกเลขที่ใบสมัครอัตโนมัติ เช่น Q70-0003
     const prefix = `Q${academicYear.slice(-2)}-`;
     let maxSeq = 0;
     applicants.forEach(a => {
@@ -292,9 +252,7 @@ class StorageService {
 
     applicants.push(newRecord);
     localStorage.setItem(this.STORAGE_KEY_APPLICANTS, JSON.stringify(applicants));
-
-    // บันทึก Status Log
-    this.addStatusLog(appNo, '', 'รอตรวจสอบ', 'ผู้สมัครยื่นใบสมัครผ่านระบบออนไลน์', 'System');
+    this.addStatusLog(appNo, '', 'รอตรวจสอบ', 'ผู้สมัครยื่นใบสมัครผ่านระบบออนไลน์ (Local Fallback)', 'System');
 
     return {
       success: true,
@@ -311,9 +269,14 @@ class StorageService {
       ...formData,
       applicationNo: appNo,
       timestamp: formatDateTime(new Date()),
-      status: 'รอตรวจสอบ'
+      status: formData.status || 'รอตรวจสอบ'
     };
-    applicants.push(record);
+    const existIdx = applicants.findIndex(a => a.applicationNo === appNo || (a.id && a.id === formData.id));
+    if (existIdx >= 0) {
+      applicants[existIdx] = { ...applicants[existIdx], ...record };
+    } else {
+      applicants.push(record);
+    }
     localStorage.setItem(this.STORAGE_KEY_APPLICANTS, JSON.stringify(applicants));
   }
 
@@ -329,8 +292,23 @@ class StorageService {
   // ค้นหาสถานะด้วยเลขประจำตัวประชาชน
   async checkStatus(nationalId) {
     const cleanId = String(nationalId).trim();
-    const config = this.getConfig();
 
+    // 1. ตรวจสอบผ่าน Backend Express API (Google Sheets)
+    try {
+      const res = await fetch(`/api/applicants?nationalId=${encodeURIComponent(cleanId)}`);
+      const json = await res.json();
+      if (res.ok && json.success) {
+        return json;
+      }
+      if (res.status === 404) {
+        return { success: false, message: json.message || 'ไม่พบข้อมูลการสมัครของเลขประจำตัวประชาชนนี้' };
+      }
+    } catch (e) {
+      console.warn("Backend API checkStatus failed, trying fallbacks:", e);
+    }
+
+    const config = this.getConfig();
+    // 2. Fallback: Google Apps Script API
     if (config.gasApiUrl) {
       try {
         const res = await this.callGasApi('checkStatus', 'GET', { nationalId: cleanId });
@@ -340,6 +318,7 @@ class StorageService {
       }
     }
 
+    // 3. Fallback: Local Storage
     const applicants = this.getApplicantsLocal();
     const matched = applicants.slice().reverse().find(a => a.nationalId === cleanId);
 
@@ -391,8 +370,32 @@ class StorageService {
     };
   }
 
-  // เปลี่ยนสถานะผู้สมัคร
+  // เปลี่ยนสถานะผู้สมัคร (บันทึกลง Google Sheets)
   async updateStatus(applicationNo, newStatus, staffNote, staffUser) {
+    const operator = staffUser && staffUser.fullName ? staffUser.fullName : 'เจ้าหน้าที่';
+
+    // 1. เรียก Backend Express API
+    try {
+      const res = await fetch(`/api/applicants/${encodeURIComponent(applicationNo)}/status`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          status: newStatus,
+          staffNote: staffNote || '',
+          operator
+        })
+      });
+      const json = await res.json();
+      if (res.ok && json.success) {
+        this.addStatusLog(applicationNo, '', newStatus, staffNote || '', operator);
+        await this.syncApplicants();
+        return { success: true, message: json.message || 'บันทึกการเปลี่ยนสถานะเรียบร้อยแล้ว' };
+      }
+    } catch (e) {
+      console.warn("Backend API updateStatus failed, trying fallbacks:", e);
+    }
+
+    // 2. Fallback: GAS API
     const config = this.getConfig();
     if (config.gasApiUrl) {
       try {
@@ -406,6 +409,7 @@ class StorageService {
       }
     }
 
+    // 3. Fallback: Local Storage
     const applicants = this.getApplicantsLocal();
     const item = applicants.find(a => a.applicationNo === applicationNo);
     if (!item) return { success: false, message: 'ไม่พบใบสมัคร' };
@@ -414,15 +418,40 @@ class StorageService {
     item.status = newStatus;
     item.staffNote = staffNote || '';
     localStorage.setItem(this.STORAGE_KEY_APPLICANTS, JSON.stringify(applicants));
-
-    const operator = staffUser && staffUser.fullName ? staffUser.fullName : 'เจ้าหน้าที่';
     this.addStatusLog(applicationNo, oldStatus, newStatus, staffNote || '', operator);
 
     return { success: true, message: 'บันทึกการเปลี่ยนสถานะเรียบร้อยแล้ว' };
   }
 
-  // บันทึกการมอบตัว
+  // บันทึกการมอบตัว (บันทึกลง Google Sheets)
   async enrollStudent(applicationNo, enrolledNotes, staffUser) {
+    const operator = staffUser && staffUser.fullName ? staffUser.fullName : 'เจ้าหน้าที่ทะเบียน';
+
+    // 1. เรียก Backend Express API
+    try {
+      const res = await fetch(`/api/applicants/${encodeURIComponent(applicationNo)}/enroll`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          enrolledNotes,
+          staffUser
+        })
+      });
+      const json = await res.json();
+      if (res.ok && json.success) {
+        this.addStatusLog(applicationNo, 'ผ่านการคัดเลือก', 'มอบตัวแล้ว', `บันทึกมอบตัว ออกรหัสนักศึกษา: ${json.studentId}`, operator);
+        await this.syncApplicants();
+        return {
+          success: true,
+          message: json.message || 'บันทึกการมอบตัวสำเร็จ',
+          studentId: json.studentId
+        };
+      }
+    } catch (e) {
+      console.warn("Backend API enrollStudent failed, trying fallbacks:", e);
+    }
+
+    // 2. Fallback: GAS API
     const config = this.getConfig();
     if (config.gasApiUrl) {
       try {
@@ -436,11 +465,11 @@ class StorageService {
       }
     }
 
+    // 3. Fallback: Local Storage
     const applicants = this.getApplicantsLocal();
     const item = applicants.find(a => a.applicationNo === applicationNo);
     if (!item) return { success: false, message: 'ไม่พบใบสมัคร' };
 
-    // ออกรหัสนักศึกษาอัตโนมัติ เช่น 70201010002
     const prefix = '702010';
     let maxNum = 0;
     applicants.forEach(a => {
@@ -451,7 +480,6 @@ class StorageService {
     });
     const studentId = `${prefix}${String(maxNum + 1).padStart(5, '0')}`;
 
-    const operator = staffUser && staffUser.fullName ? staffUser.fullName : 'เจ้าหน้าที่ทะเบียน';
     item.status = 'มอบตัวแล้ว';
     item.studentId = studentId;
     item.enrolledAt = formatDateTime(new Date());
@@ -466,6 +494,24 @@ class StorageService {
       message: 'บันทึกการมอบตัวสำเร็จ',
       studentId: studentId
     };
+  }
+
+  // ลบข้อมูลผู้สมัคร (Requirement 4: ลบแถวจริงใน Google Sheets ผ่าน deleteDimension)
+  async deleteApplicant(idOrAppNo) {
+    try {
+      const res = await fetch(`/api/applicants/${encodeURIComponent(idOrAppNo)}`, {
+        method: 'DELETE'
+      });
+      const json = await res.json();
+      if (res.ok && json.success) {
+        await this.syncApplicants();
+        return json;
+      }
+      return { success: false, message: json.message || 'ไม่สามารถลบข้อมูลได้' };
+    } catch (e) {
+      console.error("Backend API deleteApplicant failed:", e);
+      return { success: false, message: 'เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์เพื่อลบข้อมูล' };
+    }
   }
 
   addStatusLog(applicationNo, oldStatus, newStatus, note, changedBy) {
@@ -587,6 +633,7 @@ let currentUploadedFiles = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  storageService.syncApplicants();
   initNavigation();
   initProvincesDropdown();
   loadSystemSettings();
@@ -1228,6 +1275,20 @@ function initStaffPortal() {
     }
   });
 
+  // ปุ่มรีเฟรชข้อมูลจาก Google Sheets
+  const btnRefresh = document.getElementById('btn-refresh-sheets');
+  if (btnRefresh) {
+    btnRefresh.addEventListener('click', async () => {
+      btnRefresh.disabled = true;
+      btnRefresh.textContent = 'กำลังซิงค์ Google Sheets...';
+      await storageService.syncApplicants();
+      renderApplicantsTable();
+      renderDashboardStats();
+      btnRefresh.disabled = false;
+      btnRefresh.textContent = 'รีเฟรชข้อมูล (Sheets)';
+    });
+  }
+
   // ปุ่ม Export ข้อมูล
   const btnExport = document.getElementById('btn-export-csv');
   if (btnExport) {
@@ -1257,7 +1318,7 @@ function handleStaffLogin(username, password) {
   }
 }
 
-function showStaffDashboard(user) {
+async function showStaffDashboard(user) {
   document.getElementById('staff-login-view').style.display = 'none';
   document.getElementById('staff-logged-view').style.display = 'block';
 
@@ -1273,6 +1334,13 @@ function showStaffDashboard(user) {
   renderApplicantsTable();
   renderDashboardStats();
   populateSettingsForm();
+
+  // ดึงข้อมูลล่าสุดจาก Google Sheets และรีเฟรชตาราง
+  try {
+    await storageService.syncApplicants();
+    renderApplicantsTable();
+    renderDashboardStats();
+  } catch (e) {}
 }
 
 /**
@@ -1317,8 +1385,9 @@ function renderApplicantsTable() {
         <td>${branchInfo}</td>
         <td style="text-align: center;">${a.gpax || '-'}</td>
         <td style="text-align: center;">${renderStatusBadge(a.status)}</td>
-        <td style="text-align: center;">
+        <td style="text-align: center; white-space: nowrap;">
           <button class="btn btn-secondary btn-sm" onclick="openApplicantDetailModal('${a.applicationNo}')">ตรวจเอกสาร / จัดการ</button>
+          <button class="btn btn-danger btn-sm" style="background-color: #B91C1C; color: #fff; margin-left: 4px; border: none; padding: 4px 8px; border-radius: var(--radius); cursor: pointer;" onclick="deleteApplicantRow('${a.id || a.applicationNo}', '${a.fullName || a.applicationNo}')" title="ลบข้อมูลออกจาก Google Sheets">ลบ</button>
         </td>
       </tr>
     `;
@@ -1535,6 +1604,26 @@ window.openApplicantDetailModal = function(applicationNo) {
     enrollSection.style.display = 'none';
   }
 
+  // ปุ่มลบใบสมัครออกจาก Google Sheets
+  const deleteModalBtn = document.getElementById('btn-modal-delete-applicant');
+  if (deleteModalBtn) {
+    deleteModalBtn.onclick = async () => {
+      if (!confirm(`ยืนยันการลบใบสมัครเลขที่ "${applicant.applicationNo}" (${applicant.fullName}) ออกจากระบบและ Google Sheets จริงหรือไม่?\n(แถวใน Google Sheet จะถูกลบถาวร ไม่สามารถกู้คืนได้)`)) return;
+      deleteModalBtn.disabled = true;
+      deleteModalBtn.textContent = 'กำลังลบ...';
+      const res = await storageService.deleteApplicant(applicant.id || applicant.applicationNo);
+      alert(res.message);
+      deleteModalBtn.disabled = false;
+      deleteModalBtn.textContent = 'ลบใบสมัคร';
+      if (res.success) {
+        modal.classList.remove('active');
+        await storageService.syncApplicants();
+        renderApplicantsTable();
+        renderDashboardStats();
+      }
+    };
+  }
+
   // ปุ่มพิมพ์ใบสมัครสำหรับเจ้าหน้าที่
   const printDocBtn = document.getElementById('btn-modal-print-doc');
   if (printDocBtn) {
@@ -1542,6 +1631,22 @@ window.openApplicantDetailModal = function(applicationNo) {
   }
 
   modal.classList.add('active');
+};
+
+/**
+ * ฟังก์ชันลบแถวผู้สมัครจากตารางและ Google Sheets
+ */
+window.deleteApplicantRow = async function(idOrAppNo, name) {
+  if (!confirm(`คุณต้องการลบข้อมูลของ "${name}" (เลขที่: ${idOrAppNo}) ออกจากระบบและ Google Sheets จริงหรือไม่?\n\n(การกระทำนี้จะลบแถวออกจากชีตจริง ไม่สามารถกู้คืนได้)`)) {
+    return;
+  }
+  const res = await storageService.deleteApplicant(idOrAppNo);
+  alert(res.message);
+  if (res.success) {
+    await storageService.syncApplicants();
+    renderApplicantsTable();
+    renderDashboardStats();
+  }
 };
 
 function getDocTypeName(type) {

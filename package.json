@@ -1,0 +1,24 @@
+{
+  "name": "thaluang-admission-system",
+  "version": "1.0.0",
+  "description": "ระบบรับสมัครเรียนออนไลน์ วิทยาลัยเทคนิคท่าหลวงซิเมนต์ไทยอนุสรณ์ เชื่อมต่อ Google Sheets API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node test_server.js"
+  },
+  "keywords": [
+    "admission",
+    "express",
+    "google-sheets-api"
+  ],
+  "author": "Thaluang Admission",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "googleapis": "^189.0.0"
+  }
+}

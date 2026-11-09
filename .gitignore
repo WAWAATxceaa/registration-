@@ -1,3 +1,14 @@
+# Environment and Secrets
+.env
+*.key
+*.pem
+service-account*.json
+credentials*.json
+
+# Dependencies
+node_modules/
+npm-debug.log*
+
 # Duplicate folder
 /ระบบสมัครเรียน/
 

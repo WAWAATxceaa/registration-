@@ -651,7 +651,10 @@
                 <option value="มอบตัวแล้ว">มอบตัวแล้ว</option>
               </select>
             </div>
-            <div>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" id="btn-refresh-sheets" class="btn btn-secondary btn-sm" style="background-color: var(--primary-color); color: #fff;">
+                รีเฟรชข้อมูล (Sheets)
+              </button>
               <button type="button" id="btn-export-csv" class="btn btn-success btn-sm">
                 ส่งออก Excel / CSV
               </button>
@@ -922,9 +925,12 @@
 
       </div>
 
-      <div class="modal-footer">
-        <button type="button" id="btn-modal-print-doc" class="btn btn-secondary">พิมพ์ใบสมัคร (PDF)</button>
-        <button type="button" class="btn btn-secondary" onclick="document.getElementById('applicant-detail-modal').classList.remove('active')">ปิดหน้าต่าง</button>
+      <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+        <button type="button" id="btn-modal-delete-applicant" class="btn btn-danger" style="background-color: var(--danger-color); color: #fff;">ลบใบสมัครนี้</button>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" id="btn-modal-print-doc" class="btn btn-secondary">พิมพ์ใบสมัคร (PDF)</button>
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('applicant-detail-modal').classList.remove('active')">ปิดหน้าต่าง</button>
+        </div>
       </div>
     </div>
   </div>
