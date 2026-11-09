@@ -8,9 +8,27 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, HEAD');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  res.setHeader('Access-Control-Allow-Private-Network', 'true');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+  next();
+});
 app.use(cors());
 app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ extended: true, limit: '20mb' }));
+
+// Request logging
+app.use((req, res, next) => {
+  if (req.url.startsWith('/api')) {
+    console.log(`[API ${req.method}] ${req.url}`);
+  }
+  next();
+});
 
 // เสิร์ฟไฟล์ Static ของหน้าเว็บเดิม (index.html, css, js, assets) จาก Express ตัวเดียวกัน
 app.use(express.static(path.join(__dirname)));

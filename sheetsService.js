@@ -58,13 +58,11 @@ class SheetsService {
   getSheetsClient() {
     if (this.sheets) return this.sheets;
 
-    let authConfig = {
-      scopes: ['https://www.googleapis.com/auth/spreadsheets']
-    };
+    let credsData;
 
     if (process.env.GOOGLE_CREDENTIALS_JSON && process.env.GOOGLE_CREDENTIALS_JSON.trim()) {
       try {
-        authConfig.credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON);
+        credsData = JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON);
       } catch (e) {
         throw new Error('รูปแบบ GOOGLE_CREDENTIALS_JSON ไม่ถูกต้อง (ต้องเป็น JSON ที่สมบูรณ์)');
       }
@@ -75,7 +73,7 @@ class SheetsService {
       }
       try {
         const fileContent = fs.readFileSync(keyPath, 'utf8');
-        authConfig.credentials = JSON.parse(fileContent);
+        credsData = JSON.parse(fileContent);
       } catch (e) {
         throw new Error(`ไม่สามารถอ่านไฟล์กุญแจ Service Account: ${e.message}`);
       }
@@ -87,7 +85,11 @@ class SheetsService {
       throw new Error('กรุณากำหนด SPREADSHEET_ID ใน .env');
     }
 
-    const auth = new google.auth.GoogleAuth(authConfig);
+    const auth = new google.auth.JWT({
+      email: credsData.client_email,
+      key: credsData.private_key,
+      scopes: ['https://www.googleapis.com/auth/spreadsheets']
+    });
     this.sheets = google.sheets({ version: 'v4', auth });
     return this.sheets;
   }
