@@ -149,10 +149,30 @@ class StorageService {
     }
   }
 
+  // คำนวณหา API Base URL อัตโนมัติ (รองรับทั้งการเปิดผ่าน http://localhost:3000 และ file://)
+  getApiBaseUrl() {
+    if (window.location.protocol === 'file:' || !window.location.origin || window.location.origin === 'null') {
+      return 'http://localhost:3000';
+    }
+    return '';
+  }
+
+  // ตรวจสอบความพร้อมของเซิร์ฟเวอร์ Node.js และ Google Sheets
+  async checkHealth() {
+    try {
+      const res = await fetch(`${this.getApiBaseUrl()}/api/health`, { cache: 'no-store' });
+      if (res.ok) {
+        const json = await res.json();
+        return { online: true, ...json };
+      }
+    } catch (e) {}
+    return { online: false };
+  }
+
   // ดึงข้อมูลผู้สมัครล่าสุดจาก Google Sheets ผ่าน Backend API
   async syncApplicants() {
     try {
-      const res = await fetch('/api/applicants');
+      const res = await fetch(`${this.getApiBaseUrl()}/api/applicants`, { cache: 'no-store' });
       if (res.ok) {
         const json = await res.json();
         if (json.success && Array.isArray(json.data)) {
@@ -172,7 +192,7 @@ class StorageService {
 
     // 1. ส่งผ่าน Backend Express API (Google Sheets API v4)
     try {
-      const res = await fetch('/api/applicants', {
+      const res = await fetch(`${this.getApiBaseUrl()}/api/applicants`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -182,7 +202,7 @@ class StorageService {
       if (!res.ok || !result.success) {
         return {
           success: false,
-          message: result.message || 'เกิดข้อผิดพลาดในการบันทึกข้อมูล'
+          message: result.message || 'เกิดข้อผิดพลาดในการบันทึกข้อมูลลง Google Sheets'
         };
       }
 
@@ -193,71 +213,74 @@ class StorageService {
 
       return {
         success: true,
-        message: result.message || 'บันทึกข้อมูลการสมัครเรียบร้อยแล้ว',
+        message: 'บันทึกข้อมูลการสมัครลง Google Sheets เรียบร้อยแล้ว',
         applicationNo: appNo,
         academicYear: result.academicYear || config.academicYear || '2570',
         timestamp: result.timestamp
       };
     } catch (e) {
-      console.warn("Backend API call failed, trying GAS API or Local Storage fallback:", e);
-    }
+      console.warn("Backend API call failed:", e);
 
-    // 2. Fallback: Google Apps Script API ถ้าตั้งค่าไว้
-    if (config.gasApiUrl) {
-      try {
-        const gasResult = await this.callGasApi('submitApplication', 'POST', { data: formData });
-        if (gasResult && gasResult.success) {
-          this.saveApplicantLocal(formData, gasResult.applicationNo);
-          return gasResult;
-        }
-      } catch (e) {
-        console.warn("GAS API call failed, falling back to local storage:", e);
-      }
-    }
-
-    // 3. Fallback: Local Storage Standalone Mode
-    const applicants = this.getApplicantsLocal();
-    const cleanId = String(formData.nationalId).trim();
-    const academicYear = config.academicYear || '2570';
-
-    const isDup = applicants.some(a => a.nationalId === cleanId && a.academicYear === academicYear);
-    if (isDup) {
+      // ถ้าเซิร์ฟเวอร์ยังไม่เปิด (Failed to fetch) ห้ามบอกว่าสำเร็จเด็ดขาด!
       return {
         success: false,
-        message: `เลขประจำตัวประชาชนนี้ได้ยื่นใบสมัครในปีการศึกษา ${academicYear} ไปแล้ว ไม่สามารถสมัครซ้ำได้`
+        isOffline: true,
+        message: '【ไม่สามารถส่งข้อมูลได้: เซิร์ฟเวอร์ออฟไลน์】\n\nระบบยังไม่ได้เปิดเซิร์ฟเวอร์ Node.js ข้อมูลจึงยังไม่เข้า Google Sheet!\n\nวิธีแก้ไข:\n1. ดับเบิลคลิกเปิดไฟล์ "start_server.bat" ในโฟลเดอร์โครงการ\n2. หรือเปิดผ่านเบราว์เซอร์ที่ http://localhost:3000\n3. จากนั้นกดส่งใบสมัครใหม่อีกครั้ง'
       };
     }
+  }
 
-    const prefix = `Q${academicYear.slice(-2)}-`;
-    let maxSeq = 0;
-    applicants.forEach(a => {
-      if (a.applicationNo && a.applicationNo.startsWith(prefix)) {
-        const num = parseInt(a.applicationNo.replace(prefix, ''), 10);
-        if (!isNaN(num) && num > maxSeq) maxSeq = num;
+  // ซิงค์ข้อมูลผู้สมัครที่เคยบันทึกค้างใน LocalStorage ขึ้น Google Sheets
+  async syncLocalToSheets() {
+    const localApplicants = this.getApplicantsLocal();
+    if (!localApplicants || localApplicants.length === 0) {
+      return { success: true, count: 0, message: 'ไม่มีข้อมูลค้างในเครื่อง' };
+    }
+
+    let syncedCount = 0;
+    const errors = [];
+
+    for (const app of localApplicants) {
+      // ข้าม mock เดิมที่เป็นตัวอย่างระบบ
+      if (app.fullName === 'สมเกียรติ มั่นคง' || app.fullName === 'นภัสสร รุ่งเรือง') {
+        continue;
       }
-    });
-    const appNo = `${prefix}${String(maxSeq + 1).padStart(4, '0')}`;
 
-    const newRecord = {
-      ...formData,
-      applicationNo: appNo,
-      timestamp: formatDateTime(new Date()),
-      academicYear: academicYear,
-      status: 'รอตรวจสอบ',
-      staffNote: '',
-      studentId: '',
-      enrolledAt: '',
-      enrolledBy: ''
-    };
+      try {
+        const res = await fetch(`${this.getApiBaseUrl()}/api/applicants`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(app)
+        });
+        const result = await res.json();
+        if (res.ok && result.success) {
+          syncedCount++;
+        } else if (res.status === 409) {
+          // มีข้อมูลในชีตอยู่แล้ว
+        } else {
+          errors.push(result.message || 'บันทึกไม่สำเร็จ');
+        }
+      } catch (err) {
+        errors.push(err.message);
+      }
+    }
 
-    applicants.push(newRecord);
-    localStorage.setItem(this.STORAGE_KEY_APPLICANTS, JSON.stringify(applicants));
-    this.addStatusLog(appNo, '', 'รอตรวจสอบ', 'ผู้สมัครยื่นใบสมัครผ่านระบบออนไลน์ (Local Fallback)', 'System');
+    await this.syncApplicants();
 
-    return {
-      success: true,
-      message: 'บันทึกข้อมูลการสมัครเรียบร้อยแล้ว',
-      applicationNo: appNo,
+    if (syncedCount > 0) {
+      return {
+        success: true,
+        count: syncedCount,
+        message: `นำข้อมูลผู้สมัคร ${syncedCount} รายการขึ้น Google Sheets เรียบร้อยแล้ว!`
+      };
+    } else {
+      return {
+        success: true,
+        count: 0,
+        message: 'ข้อมูลทั้งหมดในเครื่องมีอยู่บน Google Sheets เรียบร้อยแล้ว'
+      };
+    }
+  }
       academicYear: academicYear,
       timestamp: newRecord.timestamp
     };
@@ -295,7 +318,7 @@ class StorageService {
 
     // 1. ตรวจสอบผ่าน Backend Express API (Google Sheets)
     try {
-      const res = await fetch(`/api/applicants?nationalId=${encodeURIComponent(cleanId)}`);
+      const res = await fetch(`${this.getApiBaseUrl()}/api/applicants?nationalId=${encodeURIComponent(cleanId)}`);
       const json = await res.json();
       if (res.ok && json.success) {
         return json;
@@ -376,7 +399,7 @@ class StorageService {
 
     // 1. เรียก Backend Express API
     try {
-      const res = await fetch(`/api/applicants/${encodeURIComponent(applicationNo)}/status`, {
+      const res = await fetch(`${this.getApiBaseUrl()}/api/applicants/${encodeURIComponent(applicationNo)}/status`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -429,7 +452,7 @@ class StorageService {
 
     // 1. เรียก Backend Express API
     try {
-      const res = await fetch(`/api/applicants/${encodeURIComponent(applicationNo)}/enroll`, {
+      const res = await fetch(`${this.getApiBaseUrl()}/api/applicants/${encodeURIComponent(applicationNo)}/enroll`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -499,7 +522,7 @@ class StorageService {
   // ลบข้อมูลผู้สมัคร (Requirement 4: ลบแถวจริงใน Google Sheets ผ่าน deleteDimension)
   async deleteApplicant(idOrAppNo) {
     try {
-      const res = await fetch(`/api/applicants/${encodeURIComponent(idOrAppNo)}`, {
+      const res = await fetch(`${this.getApiBaseUrl()}/api/applicants/${encodeURIComponent(idOrAppNo)}`, {
         method: 'DELETE'
       });
       const json = await res.json();
@@ -633,6 +656,9 @@ let currentUploadedFiles = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  checkServerConnectionStatus();
+  setInterval(checkServerConnectionStatus, 8000);
+
   storageService.syncApplicants();
   initNavigation();
   initProvincesDropdown();
@@ -641,6 +667,35 @@ document.addEventListener('DOMContentLoaded', () => {
   initStatusCheckEvents();
   initStaffPortal();
 });
+
+/**
+ * ตรวจสอบสถานะการเชื่อมต่อระหว่างเบราว์เซอร์กับเซิร์ฟเวอร์ Node.js + Google Sheets
+ */
+async function checkServerConnectionStatus() {
+  const pill = document.getElementById('sheets-connection-pill');
+  const banner = document.getElementById('connection-status-banner');
+  const status = await storageService.checkHealth();
+
+  if (status.online) {
+    if (pill) {
+      pill.style.backgroundColor = '#DEF7EC';
+      pill.style.color = '#03543F';
+      pill.innerHTML = '<span style="font-size: 8px; color: #10B981;">●</span> Google Sheets พร้อมใช้งาน';
+    }
+    if (banner) {
+      banner.style.display = 'none';
+    }
+  } else {
+    if (pill) {
+      pill.style.backgroundColor = '#FEE2E2';
+      pill.style.color = '#991B1B';
+      pill.innerHTML = '<span style="font-size: 8px; color: #EF4444;">●</span> เซิร์ฟเวอร์ออฟไลน์ (ยังไม่ได้เปิด)';
+    }
+    if (banner) {
+      banner.style.display = 'block';
+    }
+  }
+}
 
 /**
  * การสลับหน้าผ่านเมนูหลัก (หน้าแรก / สมัครเรียน / ตรวจสอบสถานะ / เจ้าหน้าที่)
@@ -1286,6 +1341,21 @@ function initStaffPortal() {
       renderDashboardStats();
       btnRefresh.disabled = false;
       btnRefresh.textContent = 'รีเฟรชข้อมูล (Sheets)';
+    });
+  }
+
+  // ปุ่มนำข้อมูลค้างส่งในเครื่องขึ้น Google Sheets
+  const btnSyncLocal = document.getElementById('btn-sync-local-sheets');
+  if (btnSyncLocal) {
+    btnSyncLocal.addEventListener('click', async () => {
+      btnSyncLocal.disabled = true;
+      btnSyncLocal.textContent = 'กำลังนำข้อมูลขึ้นชีต...';
+      const res = await storageService.syncLocalToSheets();
+      alert(res.message);
+      btnSyncLocal.disabled = false;
+      btnSyncLocal.textContent = 'นำข้อมูลในเครื่องขึ้น Sheets';
+      renderApplicantsTable();
+      renderDashboardStats();
     });
   }
 

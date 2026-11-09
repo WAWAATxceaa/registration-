@@ -16,7 +16,12 @@
       <div class="header-text">
         <h1 class="college-title">วิทยาลัยเทคนิคท่าหลวงซิเมนต์ไทยอนุสรณ์</h1>
         <div class="sub-organization">สังกัดสำนักงานคณะกรรมการการอาชีวศึกษา กระทรวงศึกษาธิการ</div>
-        <div class="system-tagline">ระบบรับสมัครนักเรียน นักศึกษา เข้าศึกษาต่อประเภทโควตา ประจำปีการศึกษา 2570</div>
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+          <div class="system-tagline">ระบบรับสมัครนักเรียน นักศึกษา เข้าศึกษาต่อประเภทโควตา ประจำปีการศึกษา 2570</div>
+          <span id="sheets-connection-pill" style="font-size: 12px; padding: 3px 10px; border-radius: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; background-color: #FEE2E2; color: #991B1B;">
+            <span style="font-size: 8px;">●</span> กำลังตรวจสอบเซิร์ฟเวอร์...
+          </span>
+        </div>
       </div>
     </div>
   </header>
@@ -40,6 +45,11 @@
       </ul>
     </div>
   </nav>
+
+  <!-- แถบแจ้งเตือนสถานะการเชื่อมต่อ Google Sheets -->
+  <div id="connection-status-banner" style="display: none; background-color: #FEF3C7; border-bottom: 2px solid #F59E0B; color: #92400E; padding: 12px 20px; font-size: 14px; text-align: center; font-weight: 500;">
+    <span id="connection-status-text">⚠️ ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ Node.js ได้ กรุณาดับเบิลคลิกเปิดไฟล์ <strong>start_server.bat</strong> ในโฟลเดอร์ หรือรัน <code>npm start</code> เพื่อให้บันทึกลง Google Sheets ได้</span>
+  </div>
 
   <!-- เนื้อหาหลัก -->
   <main class="site-content">
@@ -208,7 +218,7 @@
             <div class="form-section-title">ข้อ 1 ข้อมูลผู้สมัคร</div>
             
             <div class="form-group-row">
-              <div class="form-col-3 form-field">
+              <div class="form-col-2 form-field">
                 <label class="form-label" for="applicant-title">คำนำหน้า<span class="required-mark">*</span></label>
                 <select id="applicant-title" class="form-select" required>
                   <option value="">-- เลือก --</option>
@@ -219,7 +229,7 @@
                 </select>
               </div>
 
-              <div class="form-col-5 form-field">
+              <div class="form-col-6 form-field">
                 <label class="form-label" for="applicant-fullname">ชื่อ - นามสกุล<span class="required-mark">*</span></label>
                 <input type="text" id="applicant-fullname" class="form-input" placeholder="ไม่ต้องใส่คำนำหน้า" required>
               </div>
@@ -234,7 +244,7 @@
               <div class="form-col-12">
                 <label class="form-label">วัน/เดือน/ปีเกิด (พ.ศ.)<span class="required-mark">*</span></label>
               </div>
-              <div class="form-col-3 form-field">
+              <div class="form-col-2 form-field">
                 <select id="applicant-birthday" class="form-select" required>
                   <option value="">-- วันที่ --</option>
                   <script>
@@ -244,7 +254,7 @@
                   </script>
                 </select>
               </div>
-              <div class="form-col-5 form-field">
+              <div class="form-col-6 form-field">
                 <select id="applicant-birthmonth" class="form-select" required>
                   <option value="">-- เดือน --</option>
                   <option value="มกราคม">มกราคม</option>
@@ -651,9 +661,12 @@
                 <option value="มอบตัวแล้ว">มอบตัวแล้ว</option>
               </select>
             </div>
-            <div style="display: flex; gap: 6px;">
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
               <button type="button" id="btn-refresh-sheets" class="btn btn-secondary btn-sm" style="background-color: var(--primary-color); color: #fff;">
                 รีเฟรชข้อมูล (Sheets)
+              </button>
+              <button type="button" id="btn-sync-local-sheets" class="btn btn-sm" style="background-color: #D97706; color: #fff; display: inline-block;">
+                นำข้อมูลในเครื่องขึ้น Sheets
               </button>
               <button type="button" id="btn-export-csv" class="btn btn-success btn-sm">
                 ส่งออก Excel / CSV
